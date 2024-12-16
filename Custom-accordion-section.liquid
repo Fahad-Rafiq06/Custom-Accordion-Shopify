@@ -112,3 +112,116 @@
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const accordions = document.querySelectorAll('.accordion-toggle');
+    accordions.forEach(button => {
+        button.addEventListener('click', () => {
+            const details = button.parentElement.nextElementSibling;
+
+            // Check if the accordion is already open
+            const isOpen = details.style.maxHeight !== '0px';
+
+            // Close all accordions
+            document.querySelectorAll('.accordion-details').forEach(accDetail => {
+                accDetail.style.maxHeight = '0';
+                accDetail.style.padding = '0 10px';  // Hide padding when closed
+            });
+
+            // If the clicked accordion wasn't open, open it
+            if (!isOpen) {
+                details.style.maxHeight = details.scrollHeight + 'px';
+                details.style.padding = '10px 10px';  // Show padding when open
+            }
+        });
+    });
+});
+</script>
+
+{% schema %}
+{
+    "name": "Custom Accordion Section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Jewelry that Inspires"
+        },
+        {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description",
+            "default": "At our San Francisco design studio, our team designs our jewelry to inspire you, from the first time you see it and every day after."
+        },
+        {
+            "type": "color",
+            "id": "heading_color",
+            "label": "Heading Color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text Color",
+            "default": "#e0e0e0"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background Color",
+            "default": "#004b49"
+        },
+        {
+            "type": "color",
+            "id": "accordion_text_color",
+            "label": "Accordion Title Text Color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "accordion_bg_color",
+            "label": "Accordion Background Color",
+            "default": "#006b5a"
+        },
+        {
+            "type": "color",
+            "id": "accordion_content_text_color",
+            "label": "Accordion Content Text Color",
+            "default": "#666666"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "accordion_item",
+            "name": "Accordion Item",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Accordion Title",
+                    "default": "Recycled Gold and Silver"
+                },
+                {
+                    "type": "textarea",
+                    "id": "content",
+                    "label": "Accordion Content",
+                    "default": "Today 98% of our gold and 97% of our silver is recycled..."
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Accordion Image"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Custom Accordion Section",
+            "category": "Custom Sections"
+        }
+    ]
+}
+{% endschema %}
