@@ -12,21 +12,25 @@
             <div class="accordion-item">
                 <div class="accordion-header">
                     <!-- Optional Image -->
-                    {% if block.settings.image != blank %}
-                    <div class="accordion-image-container t4s_ratio" style="--aspect-ratioapt:1.77776; --max-width:{{ block.settings.image.width }}px">
-                        <img 
-                            class="lazyloadt4s t4s-obj-eff t4s-w-100" 
-                            src="{{ block.settings.image | image_url: '400x400' }}" 
-                            width="{{ block.settings.image.width }}" 
-                            height="{{ block.settings.image.height }}" 
-                            alt="{{ block.settings.image.alt | escape }}">
-                    </div>
-                    {% else %}
-                    <div class="accordion-placeholder-image t4s_ratio" style="--aspect-ratioapt:1.77776">
-                        {{ 'logo' | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}
-                    </div>
-                    {% endif %}
-
+{% if block.settings.image != blank %}
+<div class="accordion-image-container t4s_ratio" 
+     style="--aspect-ratioapt:1.77776; --max-width:{{ block.settings.image.width | default: '50' }}px;">
+    <img 
+    class="lazyloadt4s t4s-obj-eff t4s-w-100"
+    src="{{ block.settings.image | img_url: 'master' }}" 
+    data-src="{{ block.settings.image | img_url: 'master' }}"
+    data-sizes="auto"
+    alt="{{ block.settings.image.alt | default: 'Accordion Image' }}"
+    width="{{ block.settings.image.width | default: '50' }}" 
+    height="{{ block.settings.image.height | default: '50' }}"
+    style="display: block !important; position:relative !important; visibility: visible !important; opacity: 1 !important; max-width: 100% !important; ">
+</div>
+{% else %}
+<div class="accordion-image-placeholder">
+    <!-- Placeholder if no image is uploaded -->
+</div>
+{% endif %}
+                    <!-- Accordion Toggle -->
                     <button class="accordion-toggle" style="color: {{ section.settings.accordion_text_color }}; background-color: {{ section.settings.accordion_bg_color }};">
                         {{ block.settings.title }}
                     </button>
@@ -61,8 +65,8 @@
 
 /* Right Side: Accordion */
 .accordion-content {
-    flex: 1 1 45%;
-    max-width: 50%;
+    flex: 1;
+    max-width: 45%;
 }
 
 /* Accordion Item */
@@ -73,7 +77,7 @@
 .accordion-header {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 .accordion-toggle {
     flex: 1;
@@ -97,9 +101,14 @@
 
 /* Optional Image */
 .accordion-image-container {
-    max-width: 60px;
+    max-width: 40px;
     height: auto;
     flex-shrink: 0;
+}
+
+/* Hide placeholder when no image is present */
+.accordion-image-container img {
+    display: block;
 }
 
 /* Separator Line */
@@ -121,9 +130,6 @@
     }
     .text-content, .accordion-content {
         max-width: 100%;
-    }
-    .accordion-header {
-        flex-direction: column;
     }
 }
 </style>
