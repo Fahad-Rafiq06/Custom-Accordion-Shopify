@@ -12,9 +12,21 @@
             <div class="accordion-item">
                 <div class="accordion-header">
                     <!-- Optional Image -->
-{% if block.settings.image != blank %}
-<img src="{{ block.settings.image | file_url }}" alt="Accordion Image" class="accordion-image" width="40" height="40">
-{% endif %}
+                    {% if block.settings.image != blank %}
+                    <div class="accordion-image-container t4s_ratio" style="--aspect-ratioapt:1.77776; --max-width:{{ block.settings.image.width }}px">
+                        <img 
+                            class="lazyloadt4s t4s-obj-eff t4s-w-100" 
+                            src="{{ block.settings.image | image_url: '400x400' }}" 
+                            width="{{ block.settings.image.width }}" 
+                            height="{{ block.settings.image.height }}" 
+                            alt="{{ block.settings.image.alt | escape }}">
+                    </div>
+                    {% else %}
+                    <div class="accordion-placeholder-image t4s_ratio" style="--aspect-ratioapt:1.77776">
+                        {{ 'logo' | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}
+                    </div>
+                    {% endif %}
+
                     <button class="accordion-toggle" style="color: {{ section.settings.accordion_text_color }}; background-color: {{ section.settings.accordion_bg_color }};">
                         {{ block.settings.title }}
                     </button>
@@ -49,8 +61,8 @@
 
 /* Right Side: Accordion */
 .accordion-content {
-    flex: 1;
-    max-width: 45%;
+    flex: 1 1 45%;
+    max-width: 50%;
 }
 
 /* Accordion Item */
@@ -61,7 +73,7 @@
 .accordion-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 .accordion-toggle {
     flex: 1;
@@ -84,8 +96,8 @@
 }
 
 /* Optional Image */
-.accordion-image {
-    max-width: 40px;
+.accordion-image-container {
+    max-width: 60px;
     height: auto;
     flex-shrink: 0;
 }
@@ -109,6 +121,9 @@
     }
     .text-content, .accordion-content {
         max-width: 100%;
+    }
+    .accordion-header {
+        flex-direction: column;
     }
 }
 </style>
