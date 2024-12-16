@@ -1,0 +1,114 @@
+<section class="custom-accordion-section" style="background-color: {{ section.settings.bg_color }};">
+    <div class="custom-accordion-container">
+        <!-- Left Side: Text Content -->
+        <div class="text-content">
+            <h2 style="color: {{ section.settings.heading_color }};">{{ section.settings.heading }}</h2>
+            <p style="color: {{ section.settings.text_color }};">{{ section.settings.description }}</p>
+        </div>
+
+        <!-- Right Side: Accordion -->
+        <div class="accordion-content">
+            {% for block in section.blocks %}
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <!-- Optional Image -->
+{% if block.settings.image != blank %}
+<img src="{{ block.settings.image | file_url }}" alt="Accordion Image" class="accordion-image" width="40" height="40">
+{% endif %}
+                    <button class="accordion-toggle" style="color: {{ section.settings.accordion_text_color }}; background-color: {{ section.settings.accordion_bg_color }};">
+                        {{ block.settings.title }}
+                    </button>
+                </div>
+                <div class="accordion-details" style="max-height: 0; overflow: hidden; color: {{ section.settings.accordion_content_text_color }};">
+                    <p>{{ block.settings.content }}</p>
+                </div>
+            </div>
+            <div class="separator-line"></div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+/* General Styling */
+.custom-accordion-section {
+    padding: 40px;
+}
+.custom-accordion-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Left Side: Text Content */
+.text-content {
+    flex: 1;
+    max-width: 45%;
+}
+
+/* Right Side: Accordion */
+.accordion-content {
+    flex: 1;
+    max-width: 45%;
+}
+
+/* Accordion Item */
+.accordion-item {
+    margin-bottom: 15px;
+    position: relative;
+}
+.accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.accordion-toggle {
+    flex: 1;
+    border: none;
+    text-align: left;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.accordion-details {
+    max-height: 0;
+    padding: 0 10px;
+    font-size: 16px;
+    color: #666;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+}
+
+/* Optional Image */
+.accordion-image {
+    max-width: 40px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+/* Separator Line */
+.separator-line {
+    height: 1px;
+    background-color: #ddd;
+    margin: 10px 0;
+}
+
+/* Hover Effects */
+.accordion-toggle:hover {
+    background-color: inherit;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .custom-accordion-container {
+        flex-direction: column;
+    }
+    .text-content, .accordion-content {
+        max-width: 100%;
+    }
+}
+</style>
